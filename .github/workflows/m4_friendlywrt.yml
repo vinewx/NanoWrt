@@ -116,7 +116,6 @@ jobs:
           cd friendlywrt-rk3399
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
           ./build.sh nanopi_m4.mk
-          cp device/friendlyelec/rk3399/nanopi_m4.mk .current_config.mk
           pushd scripts/sd-fuse
           wget https://github.com/vinewx/NanoWrt/releases/download/eflasher/emmc-flasher-images.tgz
           mkdir eflasher
@@ -134,13 +133,53 @@ jobs:
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          mv friendlywrt-rk3399/out/*img* ./artifact/
           cp friendlywrt-rk3399/friendlywrt/.config ./artifact/
-          file_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64"
-          echo "##[set-output name=file_name;]$file_name"
+          config_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_Config"
+          emmc_path="./friendlywrt-rk3399/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_eflasher.img.gz"
+          emmc_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_eflasher.img.gz"
+          release_tag="FriendlyWrt_$(date "+%Y%m%d%H%M")_NanoPi-M4"
+          sd_path="./friendlywrt-rk3399/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_sd.img.gz"
+          sd_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_sd.img.gz"
+          echo "##[set-output name=emmc_path;]$emmc_path"
+          echo "##[set-output name=emmc_name;]$emmc_name"         
+          echo "##[set-output name=config_name;]$config_name"
+          echo "##[set-output name=release_tag;]$release_tag"
+          echo "##[set-output name=sd_path;]$sd_path"
+          echo "##[set-output name=sd_name;]$sd_name"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
-          name: ${{ steps.assemble_artifact.outputs.file_name }}
+          name: ${{ steps.assemble_artifact.outputs.config_name }}
           path: ./artifact/
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          tag_name: ${{ steps.assemble_artifact.outputs.release_tag }}
+          release_name: Automatic Release ${{ steps.assemble_artifact.outputs.release_tag }}
+          draft: false
+          prerelease: false
+
+      - name: Upload SD Asset
+        uses: actions/upload-release-asset@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ${{ steps.assemble_artifact.outputs.sd_path }}
+          asset_name: ${{ steps.assemble_artifact.outputs.sd_name }}
+          asset_content_type: application/gz
+
+      - name: Upload EMMC Asset
+        uses: actions/upload-release-asset@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ${{ steps.assemble_artifact.outputs.emmc_path }}
+          asset_name: ${{ steps.assemble_artifact.outputs.emmc_name }}
+          asset_content_type: application/gz
