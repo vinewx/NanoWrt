@@ -6,9 +6,7 @@ on:
     branches: 
       - master
     paths:
-      - '.github/workflows/m4_friendlywrt.yml'
-      - 'app_config.seed'
-      - 'scripts/*.sh'
+      - 'changelog/m4.md'
 
 jobs:
 
@@ -134,10 +132,10 @@ jobs:
           rm -rf ./artifact/
           mkdir -p ./artifact/
           cp friendlywrt-rk3399/friendlywrt/.config ./artifact/
-          config_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_Config"
+          config_name="M4_v$(date +%Y%m%d)_Config"
           emmc_path="./friendlywrt-rk3399/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_eflasher.img.gz"
           emmc_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_eflasher.img.gz"
-          release_tag="FriendlyWrt_$(date "+%Y%m%d%H%M")_NanoPi-M4"
+          release_tag="M4_v$(date +%Y%m%d)"
           sd_path="./friendlywrt-rk3399/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_sd.img.gz"
           sd_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_sd.img.gz"
           echo "##[set-output name=emmc_path;]$emmc_path"
