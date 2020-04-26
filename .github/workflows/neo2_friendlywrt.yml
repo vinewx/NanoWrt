@@ -6,10 +6,7 @@ on:
     branches: 
       - master
     paths:
-      - '.github/workflows/neo2_friendlywrt.yml'
-      - 'app_config.seed'
-      - 'oled_config.seed'
-      - 'scripts/*.sh'
+      - 'changelog/neo2.md'
 
 jobs:
 
@@ -130,8 +127,8 @@ jobs:
           rm -rf ./artifact/
           mkdir -p ./artifact/
           cp friendlywrt-h5/friendlywrt/.config ./artifact/
-          config_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_Config"
-          release_tag="FriendlyWrt_$(date "+%Y%m%d%H%M")_NanoPi-NEO2"
+          config_name="NEO2_v$(date "+%Y%m%d")_Config"
+          release_tag="NEO2_v$(date "+%Y%m%d")"
           sd_path="./friendlywrt-h5/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"
           sd_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"        
           echo "##[set-output name=config_name;]$config_name"
