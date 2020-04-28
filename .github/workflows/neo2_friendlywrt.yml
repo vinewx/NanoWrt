@@ -130,7 +130,7 @@ jobs:
           mkdir -p ./artifact/
           cp friendlywrt-h5/friendlywrt/.config ./artifact/
           config_name="NEO2_v$(date "+%Y%m%d")_Config"
-          release_tag="NEO2_v$(date "+%Y%m%d")"
+          release_tag="v$(date "+%Y%m%d")_NEO2"
           sd_path="./friendlywrt-h5/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"
           sd_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"        
           echo "##[set-output name=config_name;]$config_name"

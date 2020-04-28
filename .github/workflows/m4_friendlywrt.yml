@@ -137,7 +137,7 @@ jobs:
           config_name="M4_v$(date +%Y%m%d)_Config"
           emmc_path="./friendlywrt-rk3399/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_eflasher.img.gz"
           emmc_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_eflasher.img.gz"
-          release_tag="M4_v$(date +%Y%m%d)"
+          release_tag="v$(date +%Y%m%d)_M4"
           sd_path="./friendlywrt-rk3399/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_sd.img.gz"
           sd_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_sd.img.gz"
           echo "##[set-output name=emmc_path;]$emmc_path"
