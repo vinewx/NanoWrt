@@ -1,12 +1,13 @@
 name: FriendlyWrt for NanoPi-M4
 
+# Copyright (c) 2020 vinewx
+#
+# 警告:
+# 对着屏幕的哥们, 我们允许你使用此脚本, 但不允许你抹去作者的信息, 请保留这段话.
+# 你可以随意使用本脚本的代码, 但请注明出处.
+
 on:
   repository_dispatch:
-  push:
-    branches: 
-      - master
-    paths:
-      - 'changelog/m4.md'
   schedule:
     - cron: '10 0 * * *'
 
@@ -62,10 +63,8 @@ jobs:
           sed -i '/touch/a\    echo /etc/firstboot_${board} >> /etc/sysupgrade.conf' package/base-files/files/etc/rc.local
           cd package
           svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/autocore
+          svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash
           git clone https://github.com/maxlicheng/luci-app-unblockmusic.git
-          cd luci-app-unblockmusic
-          git checkout bd05512a47dcbf25d62aaaab4d41808792339b16
-          cd ../
           git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
           cd ../
           mkdir -p package/luci-lib-docker
@@ -76,11 +75,8 @@ jobs:
           wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Makefile -O package/luci-app-diskman/Makefile
           mkdir -p package/parted
           wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O package/parted/Makefile
-          
-      - name: Install OpenClash
-        run: |
-          cd friendlywrt-rk3399/friendlywrt/package
-          svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash
+          mkdir -p staging_dir/host/bin
+          wget -q -O - https://github.com/upx/upx/releases/download/v3.96/upx-3.96-amd64_linux.tar.xz | tar -Jx --strip 1 -f - -C staging_dir/host/bin upx-3.96-amd64_linux/upx
 
       - name: Install Clash Binaries
         run: |
