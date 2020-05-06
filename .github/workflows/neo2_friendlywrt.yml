@@ -59,14 +59,19 @@ jobs:
           cp ../../scripts/settings.sh package/base-files/files/root/
           chmod +x package/base-files/files/root/settings.sh
           sed -i '/touch/i\    /root/settings.sh' package/base-files/files/etc/rc.local
-          sed -i '/touch/a\    /etc/init.d/system reload' package/base-files/files/etc/rc.local
           sed -i '/touch/a\    echo /etc/firstboot_${board} >> /etc/sysupgrade.conf' package/base-files/files/etc/rc.local
           cd package
           svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/autocore
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-samba4
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree
+          svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/samba4
           svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash
+          sed -i 's/444/808080/g' luci-app-openclash/files/usr/lib/lua/luci/view/openclash/myip.htm
           git clone https://github.com/maxlicheng/luci-app-unblockmusic.git
-          git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
-          cd ../
+          git clone https://github.com/apollo-ng/luci-theme-darkmatter.git
+          cd luci-theme-darkmatter
+          git checkout fd88e48ad0932dd1de47ff1f4274d5202c59f4f0
+          cd ../../
           mkdir -p package/luci-lib-docker
           wget https://raw.githubusercontent.com/lisaac/luci-lib-docker/master/Makefile -O package/luci-lib-docker/Makefile
           mkdir -p package/luci-app-dockerman

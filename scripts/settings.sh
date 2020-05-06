@@ -1,10 +1,10 @@
 #!/bin/sh
 # THIS SCIPRT ONLY RUN ONCE. Base on /etc/firstboot_${board}
 
-uci set luci.main.mediaurlbase="/luci-static/argon"
+uci set luci.main.mediaurlbase="/luci-static/darkmatter"
 
 uci batch <<EOF
-set system.@system[0].hostname=New-Pi
+set system.@system[0].hostname=NEO
 set system.@system[0].zonename='Asia/Shanghai'
 set system.@system[0].timezone='CST-8'
 EOF
@@ -22,10 +22,15 @@ set network.globals.ula_prefix='fd0e:8876:14fb::/48'
 set network.lan=interface
 set network.lan.type='bridge'
 set network.lan.ifname='eth0'
-set network.lan.ipaddr='192.168.1.1'
+set network.lan.ipaddr='192.168.2.1'
 set network.lan.netmask='255.255.255.0'
 set network.lan.proto='dhcp'
 set network.lan.ip6assign='60'
 EOF
 
+uci set uhttpd.main.redirect_https='0'
+
 uci commit
+
+/etc/init.d/system reload
+/etc/init.d/uhttpd reload
