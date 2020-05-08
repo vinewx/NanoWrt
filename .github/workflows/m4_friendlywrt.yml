@@ -53,7 +53,7 @@ jobs:
           cd friendlywrt-rk3399
           . ../scripts/pure_config.sh
           echo CONFIG_PACKAGE_kmod-usb3=y >> configs/config_rk3399
-          cat ../app_config.seed >> configs/config_rk3399
+          cat ../app_config.seed | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2 >> configs/config_rk3399
           sed -i 's/dnsmasq /dnsmasq-full /' friendlywrt/include/target.mk
           cd friendlywrt
           . ../../scripts/extra.sh
@@ -93,7 +93,7 @@ jobs:
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          cp friendlywrt-rk3399/friendlywrt/.config ./artifact/
+          cat friendlywrt-rk3399/friendlywrt/.config | openssl enc -aes-256-cbc -a -e -pass pass:"vinewx" -pbkdf2 > ./artifact/.config
           config_name="M4_v$(date +%Y%m%d)_Config"
           emmc_path="./friendlywrt-rk3399/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_eflasher.img.gz"
           emmc_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-M4_arm64_eflasher.img.gz"
