@@ -1,28 +1,34 @@
-# NEO2 版本迭代记录
-###### （如无特别声明，即为上游源码同步迭代）
+# NEO2 Changelog
+###### （Daily syncing with the upstream repository）
+
+## 20200508
+* Add lean package
+* Hello World
+
+---
 
 ## 20200507
-~~luci-app-minidlna~~  
-~~luci-app-samba~~  
-~~luci-theme-argon~~  
-luci-app-ramfree✔  
-luci-app-samba4✔  
-luci-theme-darkmatter✔
+* ~~luci-app-minidlna~~
+* ~~luci-app-samba~~
+* ~~luci-theme-argon~~
+* luci-app-ramfree✔
+* luci-app-samba4✔
+* luci-theme-darkmatter✔
 
 ---
 
 ## 20200501
-* 移除非必要包及部分网卡驱动，已知支持列表：
-    - rtl8150 及 rtl8152 有线网卡
-    - rtl8188cu 及 rtl8192cu 无线网卡
+* Remove unnecessary packages and some network card drivers. Known support list:
+    - rtl8150 and rtl8152 wired network cards
+    - rtl8188cu and rtl8192cu wireless network cards
 
 ---
 
 ## 20200430
-* 补全autocore汉化信息
-* 优化初始化时间
+* Chinese localization of `autocore`
+* Optimize initialization time
 
 ---
 
 ## 20200425
-* 更新 [NanoHatOLED](https://github.com/vinewx/NanoHatOLED)
+* Update [NanoHatOLED](https://github.com/vinewx/NanoHatOLED)
