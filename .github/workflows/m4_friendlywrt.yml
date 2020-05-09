@@ -70,7 +70,8 @@ jobs:
           cd friendlywrt-rk3399
           . ../scripts/pure_config.sh
           echo CONFIG_PACKAGE_kmod-usb3=y >> configs/config_rk3399
-          cat ../app_config.seed | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2 >> configs/config_rk3399
+          cat ../app_config.seed >> configs/config_rk3399
+          cat ../forbid_config.seed | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2 >> configs/config_rk3399
           sed -i 's/dnsmasq /dnsmasq-full /' friendlywrt/include/target.mk
           cd friendlywrt
           . ../../scripts/extra.sh
