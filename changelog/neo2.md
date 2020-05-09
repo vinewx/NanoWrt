@@ -1,6 +1,11 @@
 # NEO2 Changelog
 ###### （Daily syncing with the upstream repository）
 
+## 20200510
+* Add rclone-cli
+
+---
+
 ## 20200508
 * Add lean package
 * Hello World
