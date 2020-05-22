@@ -6,15 +6,6 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean
 cp -r lean/* ./
 rm -rf lean luci-lib-docker luci-app-dockerman luci-app-diskman parted
 
-# openclash
-svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash
-sed -i 's/444/808080/g' luci-app-openclash/files/usr/lib/lua/luci/view/openclash/myip.htm
-pushd base-files/files
-mkdir -p etc/openclash/core
-wget -qO- $( curl -sL https://api.github.com/repos/Dreamacro/clash/releases | sed -r -n 's/.*"browser_download_url": *"(.*)".*/\1/p' | grep armv8 | head -n 1 ) | gunzip -c > etc/openclash/core/clash
-chmod +x etc/openclash/core/clash
-popd
-
 # darkmatter theme
 git clone https://github.com/apollo-ng/luci-theme-darkmatter.git
 pushd luci-theme-darkmatter
