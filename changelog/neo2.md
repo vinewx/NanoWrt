@@ -1,6 +1,11 @@
 # NEO2 Changelog
 ###### （Daily syncing with the upstream repository）
 
+## 20200523
+* ~~Remove Clash~~
+
+---
+
 ## 20200510
 * Add rclone-cli
 
