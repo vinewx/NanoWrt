@@ -1,6 +1,11 @@
 # NEO2 Changelog
 ###### （Daily syncing with the upstream repository）
 
+## 20200529
+* Add USB wireless dongles with mt7612u support
+
+---
+
 ## 20200523
 * ~~Remove Clash~~
 
