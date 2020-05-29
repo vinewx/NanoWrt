@@ -71,7 +71,7 @@ jobs:
           . ../scripts/pure_config.sh
           cat ../app_config.seed >> configs/config_h5
           cat ../forbid_config.seed | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2 >> configs/config_h5
-          cat ../oled_config.seed >> configs/config_h5
+          cat ../nanohat_config.seed >> configs/config_h5
           sed -i 's/dnsmasq /dnsmasq-full /' friendlywrt/include/target.mk
           cd friendlywrt
           . ../../scripts/extra.sh

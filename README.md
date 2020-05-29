@@ -1,4 +1,17 @@
 ## Nanopi NEO2 & M4 FriendlyWrt Automatic Compilation
+[1]: https://img.shields.io/badge/license-MIT-brightgreen.svg
+[2]: /LICENSE
+[3]: https://github.com/vinewx/NanoWrt/workflows/FriendlyWrt%20for%20NanoPi-NEO2/badge.svg
+[4]: https://github.com/vinewx/NanoWrt/actions?query=workflow%3A%22FriendlyWrt+for+NanoPi-NEO2%22
+[5]: https://github.com/vinewx/NanoWrt/workflows/FriendlyWrt%20for%20NanoPi-M4/badge.svg
+[6]: https://github.com/vinewx/NanoWrt/actions?query=workflow%3A%22FriendlyWrt+for+NanoPi-M4%22
+[7]: https://img.shields.io/github/downloads/vinewx/NanoWrt/total
+[8]: https://github.com/vinewx/NanoWrt/releases
+
+[![license][1]][2]
+[![FriendlyWrt for NanoPi-NEO2][3]][4]
+[![FriendlyWrt for NanoPi-M4][5]][6]
+[![Release Count][7]][8]
 
 ## Introduction:
 * IP: 192.168.2.1
