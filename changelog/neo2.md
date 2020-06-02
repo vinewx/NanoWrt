@@ -1,6 +1,11 @@
 # NEO2 Changelog
 ###### （Daily syncing with the upstream repository）
 
+## 20200602
+* luci-app-usb-printer✔
+
+---
+
 ## 20200529
 * Add USB wireless dongles with mt7612u support
 
