@@ -1,8 +1,5 @@
 
 CONFIG_PACKAGE_autocore=y
-CONFIG_PACKAGE_bash=y
-CONFIG_PACKAGE_rclone=y
-CONFIG_PACKAGE_ttyd=y
 CONFIG_PACKAGE_unzip=y
 
 CONFIG_PACKAGE_luci-app-diskman=y
@@ -14,9 +11,11 @@ CONFIG_PACKAGE_luci-app-diskman_INCLUDE_kmod_md_linear=y
 CONFIG_PACKAGE_luci-app-dockerman=y
 CONFIG_PACKAGE_luci-lib-docker=y
 CONFIG_PACKAGE_luci-app-ramfree=y
+CONFIG_PACKAGE_luci-app-rclone=y
 CONFIG_PACKAGE_luci-app-samba4=y
+CONFIG_PACKAGE_luci-app-ttyd=y
 CONFIG_PACKAGE_luci-app-unblockmusic=y
-CONFIG_PACKAGE_luci-app-usb-printer=y
+CONFIG_PACKAGE_luci-app-wrtbwmon=y
 CONFIG_PACKAGE_luci-theme-darkmatter=y
 
 CONFIG_BRCMFMAC_SDIO=y

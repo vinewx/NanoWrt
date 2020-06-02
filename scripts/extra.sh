@@ -5,6 +5,8 @@ cd package
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean
 cp -r lean/* ./
 rm -rf lean luci-lib-docker luci-app-dockerman luci-app-diskman parted
+[ -f luci-app-ttyd/root/etc/init.d/ttyd ] && rm luci-app-ttyd/root/etc/init.d/ttyd
+[ -f luci-app-rclone/luasrc/controller/rclone.lua ] && sed -i '/firstchild/Id;s/nas/services/g' luci-app-rclone/luasrc/controller/rclone.lua
 
 # darkmatter theme
 git clone https://github.com/apollo-ng/luci-theme-darkmatter.git
