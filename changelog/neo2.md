@@ -1,6 +1,11 @@
 # NEO2 Changelog
 ###### （Daily syncing with the upstream repository）
 
+## 20200605
+* Fix printer detection bug for AirPrint
+
+---
+
 ## 20200603
 * ~~luci-app-usb-printer~~ Please use [CUPS in Docker](https://hub.docker.com/r/tigerj/cups-airprint) instead (Support AirPrint☁)
 * luci-app-rclone✔
