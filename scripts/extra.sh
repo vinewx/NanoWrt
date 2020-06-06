@@ -14,6 +14,9 @@ pushd luci-theme-darkmatter
 git checkout fd88e48ad0932dd1de47ff1f4274d5202c59f4f0
 popd
 
+# ServerChan
+git clone https://github.com/tty228/luci-app-serverchan
+
 # Return to "friendlywrt" directory.
 cd ../
 
