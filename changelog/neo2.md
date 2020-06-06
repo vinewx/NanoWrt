@@ -1,6 +1,11 @@
 # NEO2 Changelog
 ###### （Daily syncing with the upstream repository）
 
+## 20200607
+* luci-app-serverchan✔
+
+---
+
 ## 20200605
 * Fix printer detection bug for AirPrint
 
