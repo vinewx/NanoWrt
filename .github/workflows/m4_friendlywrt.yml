@@ -91,7 +91,7 @@ jobs:
         run: |
           cd friendlywrt-rk3399
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
-          sed -i '/install/i\./../../scripts/enable_autocore.sh' scripts/mk-friendlywrt.sh
+          sed -i '/install/i\./../../scripts/Mods_BeforeBuild.sh' scripts/mk-friendlywrt.sh
           ./build.sh nanopi_m4.mk
           pushd scripts/sd-fuse
           wget https://github.com/vinewx/NanoWrt/releases/download/eflasher/emmc-flasher-images.tgz

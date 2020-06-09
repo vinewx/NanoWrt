@@ -1,4 +1,5 @@
 
+# Enable autocore
 [ -f package/autocore/Makefile ] && sed -i 's/@TARGET_x86 //g' package/autocore/Makefile
 
 [ -f package/autocore/files/autocore ] && sed -i 's/echo $g /#echo $g/g;s/ethtool -K $c tx-scatter/#ethtool -K $c tx-scatter/g' package/autocore/files/autocore
@@ -14,3 +15,7 @@
 [ -f feeds/luci/modules/luci-base/po/zh-cn/base.po ] && echo >> feeds/luci/modules/luci-base/po/zh-cn/base.po
 [ -f feeds/luci/modules/luci-base/po/zh-cn/base.po ] && echo msgid \"CPU Info\" >> feeds/luci/modules/luci-base/po/zh-cn/base.po
 [ -f feeds/luci/modules/luci-base/po/zh-cn/base.po ] && echo msgstr \"CPU 状态\" >> feeds/luci/modules/luci-base/po/zh-cn/base.po
+
+
+# Fix luci-app-aria2 bug
+[ -f feeds/luci/applications/luci-app-aria2/luasrc/view/aria2/overview_status.htm ] && sed -i 's/nas/services/g' feeds/luci/applications/luci-app-aria2/luasrc/view/aria2/overview_status.htm
