@@ -1,6 +1,11 @@
 # NEO2 Changelog
 ###### （Daily syncing with the upstream repository）
 
+## 20200610
+* Fix aria2 status bug
+
+---
+
 ## 20200607
 * luci-app-serverchan✔
 
