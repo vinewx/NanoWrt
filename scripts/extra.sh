@@ -17,14 +17,12 @@ popd
 # ServerChan
 git clone https://github.com/tty228/luci-app-serverchan
 
+# dockerman
+svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman
+svn co https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker
+
 # Return to "friendlywrt" directory.
 cd ../
-
-# dockerman
-mkdir -p package/luci-lib-docker
-wget https://raw.githubusercontent.com/lisaac/luci-lib-docker/master/Makefile -O package/luci-lib-docker/Makefile
-mkdir -p package/luci-app-dockerman
-wget https://raw.githubusercontent.com/lisaac/luci-app-dockerman/master/Makefile -O package/luci-app-dockerman/Makefile
 
 # diskman
 mkdir -p package/luci-app-diskman
