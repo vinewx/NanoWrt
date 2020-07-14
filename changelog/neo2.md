@@ -1,6 +1,11 @@
 # NEO2 Changelog
 ###### （Daily syncing with the upstream repository）
 
+## 20200714
+* Fix dockerman
+
+---
+
 ## 20200610
 * Fix aria2 status bug
 
