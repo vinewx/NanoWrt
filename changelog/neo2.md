@@ -1,6 +1,20 @@
 # NEO2 Changelog
 ###### （Daily syncing with the upstream repository）
 
+## 20200726
+* Rollback to 20200714
+
+---
+
+## 20200720
+* ~~luci-app-wrtbwmon~~
+* ~~luci-theme-darkmatter~~
+* ~~helloworld~~
+* luci-theme-argon✔
+* Hello World
+
+---
+
 ## 20200714
 * Fix dockerman
 
