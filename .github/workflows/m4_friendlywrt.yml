@@ -38,7 +38,7 @@ jobs:
     steps:
       
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@main
         with:
           ref: master
 
@@ -66,7 +66,7 @@ jobs:
 
       - name: Mods
         run: |
-          chmod +x scripts/*
+          chmod +x scripts/*.sh
           cd friendlywrt-rk3399
           . ../scripts/pure_config.sh
           echo CONFIG_PACKAGE_kmod-usb3=y >> configs/config_rk3399
@@ -125,7 +125,7 @@ jobs:
           echo "##[set-output name=sd_name;]$sd_name"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@main
         with:
           name: ${{ steps.assemble_artifact.outputs.config_name }}
           path: ./artifact/
