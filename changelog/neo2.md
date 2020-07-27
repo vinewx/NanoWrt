@@ -1,5 +1,11 @@
 # NEO2 Changelog
-###### （Daily syncing with the upstream repository）
+###### （Weekly syncing with the upstream repository）
+
+## 20200727
+* Reconstruct autocore
+* Automatically compile on Fridays instead to save public resources.
+
+---
 
 ## 20200726
 * Rollback to 20200714
