@@ -94,6 +94,13 @@ jobs:
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
           sed -i '/install/i\./../../scripts/Mods_BeforeBuild.sh' scripts/mk-friendlywrt.sh
           ./build.sh nanopi_neo2.mk
+          pushd scripts/sd-fuse
+          wget https://github.com/vinewx/NanoWrt/releases/download/NEO2_Black/emmc-flasher-images.tgz
+          mkdir eflasher
+          tar xzvf emmc-flasher-images.tgz -C eflasher --strip-components=1
+          popd
+          sed -i '/download_img /d' scripts/sd-fuse/mk-emmc-image.sh
+          sudo ./build.sh emmc-img
       
       - name: Zip Files
         run: |
@@ -106,9 +113,13 @@ jobs:
           mkdir -p ./artifact/
           cat friendlywrt-h5/friendlywrt/.config | openssl enc -aes-256-cbc -a -e -pass pass:"vinewx" -pbkdf2 > ./artifact/.config
           config_name="NEO2_v$(date "+%Y%m%d")_Config"
+          emmc_path="./friendlywrt-h5/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_eflasher.img.gz"
+          emmc_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_eflasher.img.gz"
           release_tag="v$(date +%Y%m%d)_NEO2"
           sd_path="./friendlywrt-h5/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"
-          sd_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"        
+          sd_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"
+          echo "##[set-output name=emmc_path;]$emmc_path"
+          echo "##[set-output name=emmc_name;]$emmc_name"
           echo "##[set-output name=config_name;]$config_name"
           echo "##[set-output name=release_tag;]$release_tag"
           echo "##[set-output name=sd_path;]$sd_path"
@@ -139,4 +150,14 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: ${{ steps.assemble_artifact.outputs.sd_path }}
           asset_name: ${{ steps.assemble_artifact.outputs.sd_name }}
+          asset_content_type: application/gz
+
+      - name: Upload EMMC Asset
+        uses: actions/upload-release-asset@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ${{ steps.assemble_artifact.outputs.emmc_path }}
+          asset_name: ${{ steps.assemble_artifact.outputs.emmc_name }}
           asset_content_type: application/gz
