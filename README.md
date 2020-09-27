@@ -1,4 +1,4 @@
-## Nanopi NEO2 & M4 FriendlyWrt Automatic Compilation
+## Nanopi NEO2 / Black & M4 FriendlyWrt Automatic Compilation
 [1]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 [2]: /LICENSE
 [3]: https://github.com/vinewx/NanoWrt/workflows/FriendlyWrt%20for%20NanoPi-NEO2/badge.svg
@@ -15,13 +15,13 @@
 
 ## Introduction:
 * IP: 192.168.2.1
-* NEO2 firmware is compatible with [NanoHatOLED](https://github.com/vinewx/NanoHatOLED) by default.
+* NEO2 / Black firmware is compatible with [NanoHatOLED](https://github.com/vinewx/NanoHatOLED) by default.
     - [Enable weather info](https://github.com/vinewx/NanoHatOLED/blob/master/README.md#enable-weather-info--%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94-python3)
-* M4 has `SD` and ` eMMC` versions:
-    - [SD ver](http://wiki.friendlyarm.com/wiki/index.php/NanoPi_M4V2/zh#.E5.BF.AB.E9.80.9F.E4.BB.8ESD.E5.8D.A1.E5.90.AF.E5.8A.A8)
-    - [eMMC ver](http://wiki.friendlyarm.com/wiki/index.php/NanoPi_M4V2/zh#.E7.83.A7.E5.86.99.E7.B3.BB.E7.BB.9F.E5.88.B0eMMC)
+* NEO2-Black / M4 has `SD` and ` eMMC` versions:
+    - SD ver: [Black](http://wiki.friendlyarm.com/wiki/index.php/NanoPi_NEO2_Black/zh#.E7.83.A7.E5.86.99.E5.88.B0TF.E5.8D.A1) / [M4](http://wiki.friendlyarm.com/wiki/index.php/NanoPi_M4V2/zh#.E5.BF.AB.E9.80.9F.E4.BB.8ESD.E5.8D.A1.E5.90.AF.E5.8A.A8)
+    - eMMC ver: [Black](http://wiki.friendlyarm.com/wiki/index.php/NanoPi_NEO2_Black/zh#.E7.83.A7.E5.86.99.E5.88.B0eMMC) / [M4](http://wiki.friendlyarm.com/wiki/index.php/NanoPi_M4V2/zh#.E7.83.A7.E5.86.99.E7.B3.BB.E7.BB.9F.E5.88.B0eMMC)
 * Firmware update: Under the luci interface, `System` 👉 ` Backup / Flash Firmware` upload a [gz file](https://github.com/vinewx/NanoWrt/releases) to flash new firmware image. 
 
 ## Changelog:
-* [NEO2](https://github.com/vinewx/NanoWrt/blob/master/changelog/neo2.md)
+* [NEO2 / Black](https://github.com/vinewx/NanoWrt/blob/master/changelog/neo2.md)
 * [M4](https://github.com/vinewx/NanoWrt/blob/master/changelog/m4.md)

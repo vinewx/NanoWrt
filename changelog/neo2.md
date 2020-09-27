@@ -1,6 +1,11 @@
 # NEO2 Changelog
 ###### （Weekly syncing with the upstream repository）
 
+## 20200927
+* Support NanoPi-NEO2-Black
+
+---
+
 ## 20200913
 * Fix `/etc/bench.log` error
 * ~~kmod-mt76x2u~~
