@@ -1,6 +1,13 @@
 # NEO2 Changelog
 ###### （Weekly syncing with the upstream repository）
 
+## 20210424
+* Use [OpenWrt](https://git.openwrt.org/openwrt/openwrt.git) official source code instead of [FriendlyWrt](https://github.com/friendlyarm/friendlywrt)
+* ~~luci-theme-darkmatter~~
+* luci-theme-argon✔
+
+---
+
 ## 20200927
 * Support NanoPi-NEO2-Black
 

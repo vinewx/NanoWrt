@@ -21,10 +21,10 @@
 # SOFTWARE.
 
 
-name: FriendlyWrt for NanoPi-NEO2
+name: OpenWrt for NanoPi-NEO2
 
 on:
-  repository_dispatch:
+  workflow_dispatch:
   schedule:
     - cron: '10 0 * * 5'
 
@@ -52,47 +52,36 @@ jobs:
           wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android/sdk
           
-      - name: Install Repo
-        run: |
-          git clone https://github.com/friendlyarm/repo
-          sudo cp repo/repo /usr/bin/
-          
       - name: Init Source
         run: |
-          mkdir friendlywrt-h5
-          cd friendlywrt-h5
-          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master -m h5.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
-          repo sync -c --no-tags --no-clone-bundle -j8
+          git clone https://github.com/vinewx/linux kernel --depth 1
+          git clone https://github.com/vinewx/u-boot --depth 1
+          git clone https://github.com/vinewx/prebuilts toolchain --depth 1
+          git clone https://github.com/vinewx/openwrt_scripts scripts --depth 1
+          git clone -b v19.07.5 https://git.openwrt.org/openwrt/openwrt.git
+          ln -s scripts/build.sh build.sh
+          ln -s scripts/sd-fuse/out out
 
       - name: Mods
         run: |
-          chmod +x scripts/*.sh
-          cd friendlywrt-h5
-          . ../scripts/pure_config.sh
-          cat ../app_config.seed >> configs/config_h5
-          cat ../forbid_config.seed | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2 >> configs/config_h5
-          cat ../nanohat_config.seed >> configs/config_h5
-          sed -i 's/dnsmasq /dnsmasq-full /' friendlywrt/include/target.mk
-          cd friendlywrt
-          . ../../scripts/extra.sh
-          cat ../../scripts/settings.sh > package/base-files/files/root/setup.sh
-          sed -i '/touch/a\    echo /etc/firstboot_${board} >> /etc/sysupgrade.conf' package/base-files/files/etc/rc.local
-          mkdir -p staging_dir/host/bin
-          wget -q -O - https://github.com/upx/upx/releases/download/v3.96/upx-3.96-amd64_linux.tar.xz | tar -Jx --strip 1 -f - -C staging_dir/host/bin upx-3.96-amd64_linux/upx
-
-      - name: Clean Feeds
-        run: |
-          cd friendlywrt-h5/friendlywrt
-          ./scripts/feeds clean -a
-          sed -i '/luci/Id;' feeds.conf.default
+          cat app_config.seed >> configs/config_h5
+          cat forbid_config.seed | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2 >> configs/config_h5
+          cat nanohat_config.seed >> configs/config_h5
+          sed -i '/install/i\./../script/Mods_BeforeBuild.sh' scripts/mk-openwrt.sh
+          sed -i 's/set -eu/set -u/' scripts/mk-openwrt.sh
+          sed -i 's/dnsmasq /dnsmasq-full /' openwrt/include/target.mk
+          pushd openwrt
+          . ../script/extra.sh
+          sed -i '/luci/Id;/packages/Id;' feeds.conf.default
+          sed -i '/routing/i\src-git packages https://github.com/friendlyarm/friendlywrt_project_packages^024097a846aa1a7ec5d0d2182d035584260bb80f' feeds.conf.default
           sed -i '/routing/i\src-git luci https://github.com/coolsnowwolf/luci' feeds.conf.default
           sed -i '/routing/a\src-git NanoHatOLED https://github.com/vinewx/NanoHatOLED.git' feeds.conf.default
+          cat ../script/settings.sh > package/lean/default-settings/files/zzz-default-settings
+          ./scripts/feeds update -a && ./scripts/feeds install -a
+          popd
 
-      - name: Build FriendlyWrt
+      - name: Build OpenWrt
         run: |
-          cd friendlywrt-h5
-          sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
-          sed -i '/install/i\./../../scripts/Mods_BeforeBuild.sh' scripts/mk-friendlywrt.sh
           ./build.sh nanopi_neo2.mk
           pushd scripts/sd-fuse
           wget https://github.com/vinewx/NanoWrt/releases/download/NEO2_Black/emmc-flasher-images.tgz
@@ -104,20 +93,20 @@ jobs:
       
       - name: Zip Files
         run: |
-          gzip friendlywrt-h5/out/*.img
+          gzip out/*.img
 
       - name: Assemble Artifact
         id: assemble_artifact
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          cat friendlywrt-h5/friendlywrt/.config | openssl enc -aes-256-cbc -a -e -pass pass:"vinewx" -pbkdf2 > ./artifact/.config
+          cat openwrt/.config | openssl enc -aes-256-cbc -a -e -pass pass:"vinewx" -pbkdf2 > ./artifact/.config
           config_name="NEO2_v$(date "+%Y%m%d")_Config"
-          emmc_path="./friendlywrt-h5/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_eflasher.img.gz"
-          emmc_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_eflasher.img.gz"
+          emmc_path="./out/OpenWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_eflasher.img.gz"
+          emmc_name="OpenWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_eflasher.img.gz"
           release_tag="v$(date +%Y%m%d)_NEO2"
-          sd_path="./friendlywrt-h5/out/FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"
-          sd_name="FriendlyWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"
+          sd_path="./out/OpenWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"
+          sd_name="OpenWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_sd.img.gz"
           echo "##[set-output name=emmc_path;]$emmc_path"
           echo "##[set-output name=emmc_name;]$emmc_name"
           echo "##[set-output name=config_name;]$config_name"

@@ -1,7 +1,7 @@
 #!/bin/sh
-# THIS SCIPRT ONLY RUN ONCE. Base on /etc/firstboot_${board}
 
-uci set luci.main.mediaurlbase="/luci-static/darkmatter"
+uci set luci.main.lang=auto
+uci commit luci
 
 uci batch <<EOF
 set system.@system[0].hostname=NEO
@@ -30,7 +30,10 @@ EOF
 
 uci set uhttpd.main.redirect_https='0'
 
+uci set fstab.@global[0].anon_mount=1
+
 uci commit
 
-/etc/init.d/system reload
-/etc/init.d/uhttpd reload
+sed -i 's#https://downloads.openwrt.org#https://mirrors.tencent.com/lede#g' /etc/opkg/distfeeds.conf
+
+exit 0
