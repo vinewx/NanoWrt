@@ -1,9 +1,6 @@
 # Enter the "package" directory.
 cd package
 
-# ca-certs
-wget https://raw.githubusercontent.com/openwrt/openwrt/1f5cbd6be7df811312fb0babd765c501a60f0038/package/system/ca-certificates/Makefile -O system/ca-certificates/Makefile
-
 # lean
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean
 pushd lean
