@@ -7,8 +7,6 @@ function setup_openwrt()
 # dist
     mkdir -p ./run  # for overlayfs ramdisk
 
-    sed -i 's/REJECT/ACCEPT/g' ./etc/config/firewall
-
     if [ -f ./etc/modules.d/brcmfmac ]; then
     	mv ./etc/modules.d/brcmfmac ./etc/modules.d/10-brcmfmac
     fi

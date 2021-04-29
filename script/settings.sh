@@ -1,6 +1,6 @@
 #!/bin/sh
 
-uci set luci.main.lang=auto
+uci set luci.main.lang=zh_cn
 uci commit luci
 
 uci batch <<EOF
@@ -8,6 +8,7 @@ set system.@system[0].hostname=NEO
 set system.@system[0].zonename='Asia/Shanghai'
 set system.@system[0].timezone='CST-8'
 EOF
+uci commit system
 echo CST-8 > /etc/TZ
 
 echo > /etc/config/network
@@ -22,18 +23,15 @@ set network.globals.ula_prefix='fd0e:8876:14fb::/48'
 set network.lan=interface
 set network.lan.type='bridge'
 set network.lan.ifname='eth0'
-set network.lan.ipaddr='192.168.2.1'
-set network.lan.netmask='255.255.255.0'
 set network.lan.proto='dhcp'
 set network.lan.ip6assign='60'
 EOF
+uci commit network
 
 uci set uhttpd.main.redirect_https='0'
+uci commit uhttpd
 
 uci set fstab.@global[0].anon_mount=1
-
-uci commit
-
-sed -i 's#https://downloads.openwrt.org#https://mirrors.tencent.com/lede#g' /etc/opkg/distfeeds.conf
+uci commit fstab
 
 exit 0

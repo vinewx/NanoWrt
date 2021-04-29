@@ -54,7 +54,7 @@ jobs:
           
       - name: Init Source
         run: |
-          git clone https://github.com/vinewx/linux kernel --depth 1
+          git clone https://github.com/vinewx/linux kernel
           git clone https://github.com/vinewx/u-boot --depth 1
           git clone https://github.com/vinewx/prebuilts toolchain --depth 1
           git clone https://github.com/vinewx/openwrt_scripts scripts --depth 1
@@ -69,9 +69,13 @@ jobs:
           cat nanohat_config.seed >> configs/config_h5
           sed -i '/install/i\./../script/Mods_BeforeBuild.sh' scripts/mk-openwrt.sh
           sed -i 's/set -eu/set -u/' scripts/mk-openwrt.sh
-          sed -i 's/dnsmasq /dnsmasq-full /' openwrt/include/target.mk
+          pushd kernel
+          git checkout e6e1474341707b1849c54a813c88bd94edcdcc9b
+          popd
           pushd openwrt
+          git checkout 5387bc9cbb9ed205f08766523a296f21dfa83b56
           . ../script/extra.sh
+          sed -i 's/dnsmasq /dnsmasq-full /' include/target.mk
           sed -i '/luci/Id;/packages/Id;' feeds.conf.default
           sed -i '/routing/i\src-git packages https://github.com/friendlyarm/friendlywrt_project_packages^024097a846aa1a7ec5d0d2182d035584260bb80f' feeds.conf.default
           sed -i '/routing/i\src-git luci https://github.com/coolsnowwolf/luci' feeds.conf.default
@@ -100,7 +104,8 @@ jobs:
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          cat openwrt/.config | openssl enc -aes-256-cbc -a -e -pass pass:"vinewx" -pbkdf2 > ./artifact/.config
+          cat kernel/.config > ./artifact/kernel.config
+          cat openwrt/.config | openssl enc -aes-256-cbc -a -e -pass pass:"vinewx" -pbkdf2 > ./artifact/openwrt.config
           config_name="NEO2_v$(date "+%Y%m%d")_Config"
           emmc_path="./out/OpenWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_eflasher.img.gz"
           emmc_name="OpenWrt_$(date +%Y%m%d)_NanoPi-NEO2_aarch64_eflasher.img.gz"
@@ -150,3 +155,11 @@ jobs:
           asset_path: ${{ steps.assemble_artifact.outputs.emmc_path }}
           asset_name: ${{ steps.assemble_artifact.outputs.emmc_name }}
           asset_content_type: application/gz
+
+      - name: Delete Workflow Runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 90
+          keep_minimum_runs: 0

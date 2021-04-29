@@ -1,6 +1,9 @@
 # Enter the "package" directory.
 cd package
 
+# ca-certs
+wget https://raw.githubusercontent.com/openwrt/openwrt/1f5cbd6be7df811312fb0babd765c501a60f0038/package/system/ca-certificates/Makefile -O system/ca-certificates/Makefile
+
 # lean
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean
 pushd lean
@@ -9,8 +12,12 @@ rm -rf luci-app-diskman autocore parted luci-theme-argon
 [ -f luci-app-rclone/luasrc/controller/rclone.lua ] && sed -i '/firstchild/Id;s/nas/services/g' luci-app-rclone/luasrc/controller/rclone.lua
 popd
 
+# Fix FullCone NAT in Firewall
+# rm -rf network/config/firewall
+# svn co https://github.com/coolsnowwolf/lede/trunk/package/network/config/firewall network/config/firewall
+
 # autocore
-cp -r ../../package/autocore autocore
+cp -avx ../../package/autocore autocore
 
 # argon theme
 git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
@@ -24,19 +31,14 @@ svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-
 svn co https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker
 
 # hello world
-svn co $(echo "U2FsdGVkX1+xmPAiu+sF5zqr0PL23miatWq7uSEn8Fl14y/HjHfgwpb08Q/2A2odXc5nGcBnlCiGQW6+17OuZ4E+wFwnJdkhRyAulNEycWn+4sMS8bBfFi2EnTt4abmC" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2)
-#filename=$(echo "U2FsdGVkX1+wOtnMvQludL4cjeRLoDC/aeRTM8Ha86Lym9Mz18FANWZxO0oKuBftVUxSEO2E/J63ivUd8abcmuTr+LXylNnJfPvP9lBXAmU=" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2)
-#[ -f $filename ] && sed -i 's/444/808080/g' $filename
+git clone $(echo "U2FsdGVkX195Fd0+OOQwOmVDUYmwbC3DbP0L36e5Qh9rMZE8ttRzVAgjLKRaKdEcD2l7amRGTKIHHtf6jJcWk1LwFNDnWlw/vYOc6CuaClY=" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2)
 
-core=$(echo "U2FsdGVkX1+7BchTVGS1ffmD13UNPR8UpsV6Fy/6GiTSkZgpPJozy9gGjkXsnsxM" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2)
+core=$(echo "U2FsdGVkX1+02cybV6rrqDhCCHmS43vO2d4IFASZpkcRxU9zXxx7vqLLenhaM9bQ" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2)
+path=$(echo "U2FsdGVkX19DAQytS7NcYxDzkCIQjT5xAEUUDv4gtS4=" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2)
 pushd base-files/files
-mkdir -p $(echo "U2FsdGVkX18LxUz4Piaxn78Aw1Her/PzkcYq3lS2xCU9xa+m7kXDOJms7l/UvCP3" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2)
+mkdir -p $path
 wget -qO- $(curl -sL $(echo "U2FsdGVkX18O1Z1KTmw1he1cry3QXZDHjzKLaBYso71PEZsiexBJlKNv7aripkhiIm8yRIySg6aoTvYGGgkpp5w17rCMGG8t6AuWPmDNLLs=" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2) | sed -r -n 's/.*"browser_download_url": *"(.*)".*/\1/p' | grep armv8 | head -n 1 ) | gunzip -c > $core
 chmod +x $core
-popd
-
-pushd $(echo "U2FsdGVkX183O4hNMXEiC5fQV3ryaNcqvqZLf7XX2MniQ9fq3Yx8WEbKwu5DdPJ9wR33G5UmLrAqEss3/bjBuQ==" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2)
-make && sudo make install
 popd
 
 
