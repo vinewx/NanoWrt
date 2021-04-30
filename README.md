@@ -11,7 +11,7 @@
 [![Release Count][5]][6]
 
 ## Introduction:
-* IP: 192.168.2.1
+* IP: DHCP Client by default
 * NEO2 / Black firmware is compatible with [NanoHatOLED](https://github.com/vinewx/NanoHatOLED) by default.
     - [Enable weather info](https://github.com/vinewx/NanoHatOLED/blob/master/README.md#enable-weather-info--%E6%98%BE%E7%A4%BA%E5%A4%A9%E6%B0%94-python3)
 * NEO2-Black has `SD` and ` eMMC` versions:
