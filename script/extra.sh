@@ -24,7 +24,10 @@ sed -i '/\t\t\t\t\t\t/d;s/ \/.*$//' luci-theme-argon/luasrc/view/themes/argon/fo
 git clone https://github.com/tty228/luci-app-serverchan
 
 # dockerman
-svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman
+wget https://github.com/lisaac/luci-app-dockerman/archive/35bcfd9de433f2da13e54c921b14be1e71a2f22c.zip
+unzip 35bcfd9de433f2da13e54c921b14be1e71a2f22c.zip "luci-app-dockerman-35bcfd9de433f2da13e54c921b14be1e71a2f22c/applications/luci-app-dockerman/*"
+mv luci-app-dockerman-35bcfd9de433f2da13e54c921b14be1e71a2f22c/applications/luci-app-dockerman .
+rm -rf luci-app-dockerman-35bcfd9de433f2da13e54c921b14be1e71a2f22c 35bcfd9de433f2da13e54c921b14be1e71a2f22c.zip
 svn co https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker
 
 # hello world
