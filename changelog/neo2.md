@@ -1,6 +1,12 @@
 # NEO2 Changelog
 ###### （Weekly syncing with the upstream repository）
 
+## 20210622
+* rollback to 19.07.1
+* ~~luci-app-dockerman~~
+
+---
+
 ## 20210429
 * add FULLCONE & FlowOffload support
 * luci-app-aria2✔
