@@ -23,10 +23,6 @@ sed -i '/\t\t\t\t\t\t/d;s/ \/.*$//' luci-theme-argon/luasrc/view/themes/argon/fo
 # ServerChan
 git clone https://github.com/tty228/luci-app-serverchan
 
-# dockerman
-svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman
-svn co https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker
-
 # hello world
 git clone $(echo "U2FsdGVkX195Fd0+OOQwOmVDUYmwbC3DbP0L36e5Qh9rMZE8ttRzVAgjLKRaKdEcD2l7amRGTKIHHtf6jJcWk1LwFNDnWlw/vYOc6CuaClY=" | openssl enc -aes-256-cbc -a -d -pass pass:"vinewx" -pbkdf2)
 

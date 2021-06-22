@@ -58,7 +58,7 @@ jobs:
           git clone https://github.com/vinewx/u-boot --depth 1
           git clone https://github.com/vinewx/prebuilts toolchain --depth 1
           git clone https://github.com/vinewx/openwrt_scripts scripts --depth 1
-          git clone -b v19.07.5 https://git.openwrt.org/openwrt/openwrt.git
+          git clone -b v19.07.1 https://git.openwrt.org/openwrt/openwrt.git
           ln -s scripts/build.sh build.sh
           ln -s scripts/sd-fuse/out out
 
@@ -70,20 +70,17 @@ jobs:
           sed -i '/install/i\./../script/Mods_BeforeBuild.sh' scripts/mk-openwrt.sh
           sed -i 's/set -eu/set -u/' scripts/mk-openwrt.sh
           pushd openwrt
-          git checkout c37eb9a9f9d43aa3231a607387754479886edf0d
           . ../script/extra.sh
           sed -i 's/dnsmasq /dnsmasq-full /' include/target.mk
           sed -i '/luci/Id;/packages/Id;' feeds.conf.default
-          sed -i '/routing/i\src-git packages https://github.com/friendlyarm/friendlywrt_project_packages^024097a846aa1a7ec5d0d2182d035584260bb80f' feeds.conf.default
+          sed -i '/routing/i\src-git packages https://github.com/friendlyarm/friendlywrt_project_packages^606051a952a3a7c2a7fb0bccb6230617d211067c' feeds.conf.default
           sed -i '/routing/i\src-git luci https://github.com/coolsnowwolf/luci' feeds.conf.default
           sed -i '/routing/a\src-git NanoHatOLED https://github.com/vinewx/NanoHatOLED.git' feeds.conf.default
           cat ../script/settings.sh > package/lean/default-settings/files/zzz-default-settings
           popd
           pushd kernel
-          git checkout e6e1474341707b1849c54a813c88bd94edcdcc9b
           quilt import ../patch/*
           quilt push -a
-          wget https://raw.githubusercontent.com/vinewx/linux/main/arch/arm64/configs/sunxi_arm64_defconfig -O arch/arm64/configs/sunxi_arm64_defconfig
           popd
 
       - name: Build OpenWrt

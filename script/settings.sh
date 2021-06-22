@@ -34,4 +34,6 @@ uci commit uhttpd
 uci set fstab.@global[0].anon_mount=1
 uci commit fstab
 
+sed -i '/exit 0/i\mkdir /tmp/resolv.conf.d && ln -s /tmp/resolv.conf.auto /tmp/resolv.conf.d/resolv.conf.auto' /etc/rc.local
+
 exit 0
